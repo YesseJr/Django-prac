@@ -1,0 +1,463 @@
+/* =========================
+   GLOBAL RESET & BASE
+========================= */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: #afcbcb;
+    min-height: 100vh;
+    color: #fff;
+}
+
+/* =========================
+   NAVBAR
+========================= */
+.navbar {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    height: 70px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 50px;
+    background: #2a3e52;
+    box-shadow: 0 8px 30px rgba(0,0,0,0.45);
+}
+
+.nav-logo {
+    font-size: 1.6rem;
+    font-weight: 700;
+    letter-spacing: 1px;
+}
+
+.nav-links {
+    list-style: none;
+    display: flex;
+    gap: 30px;
+}
+
+.nav-links li a {
+    position: relative;
+    text-decoration: none;
+    color: #fff;
+    font-size: 1rem;
+    padding-bottom: 5px;
+}
+
+.nav-links li a::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 0%;
+    height: 2px;
+    background: #ffd700;
+    transition: width 0.3s ease;
+}
+
+.nav-links li a:hover::after {
+    width: 100%;
+}
+
+/* =========================
+   COLOR BAR (.not)
+========================= */
+.not {
+    position: sticky;
+    top: 70px; /* exactly navbar height */
+    z-index: 99;
+    height: 20px;
+    width: 100%;
+    background: linear-gradient(
+        to right,
+        #2a3e52,
+        #5f8590,
+        #91aeb5
+    );
+    box-shadow:
+        0 -6px 12px rgba(95, 133, 144, 0.6),
+        0 6px 15px rgba(0,0,0,0.25);
+}
+
+/* blending edge with navbar */
+.not::before {
+    content: "";
+    position: absolute;
+    top: -12px;
+    left: 0;
+    width: 100%;
+    height: 12px;
+    background: linear-gradient(
+        to bottom,
+        rgba(95, 133, 144, 0.7),
+        transparent
+    );
+}
+
+/* =========================
+   CONTAINER
+========================= */
+.container {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+/* =========================
+   HEADER
+========================= */
+header {
+    text-align: center;
+    padding: 80px 20px 50px;
+    text-shadow: 2px 4px 10px rgba(0,0,0,0.45);
+}
+
+header h1 {
+    font-size: 3.8em;
+    margin-bottom: 15px;
+    animation: fadeInDown 1s ease;
+}
+
+header p {
+    font-size: 1.4em;
+    opacity: 0.95;
+}
+
+/* =========================
+   GALLERY
+========================= */
+.gallery {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 35px;
+    padding: 30px 10px;
+}
+
+/* =========================
+   ARTIST CARD
+========================= */
+
+.artist-card {
+    position: relative;
+    width: 200px;
+    height: 300px;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    cursor: pointer;
+    transition: transform 0.3s ease;
+}
+
+.artist-card:hover {
+    transform: scale(1.05);
+}
+
+.artist-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.artist-overlay {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: rgba(0, 0, 0, 0.5);
+    color: #fff;
+    padding: 10px;
+}
+
+.artist-name {
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.artist-genre {
+    font-size: 14px;
+}
+
+.profile-header {
+    display: flex;
+    align-items: center;
+}
+
+.profile-image {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-right: 20px;
+}
+
+.profile-info {
+    flex: 1;
+}
+
+.songs-section {
+    margin-top: 20px;
+}
+
+.song-card {
+    padding: 10px;
+    margin-bottom: 10px;
+    background-color: transparent;
+    border: 1px solid #ddd;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.song-card:hover {
+    background-color: #f0f0f0;
+}
+
+.audio-player {
+    margin-top: 20px;
+    text-align: center;
+}
+
+#audioTitle {
+    margin-top: 10px;
+    font-weight: bold;
+    font-size: 18px;
+}
+
+
+
+.artist-card:hover .artist-image {
+    transform: scale(1.15);
+}
+
+
+/* =========================
+   PROFILE MODAL
+========================= */
+.profile-modal {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.92);
+    z-index: 1000;
+    overflow-y: auto;
+}
+
+.profile-modal.active {
+    display: block;
+}
+
+/* =========================
+   PROFILE CONTENT
+========================= */
+.profile-content {
+    max-width: 950px;
+    margin: 60px auto;
+    background: rgba(30, 60, 114, 0.88);
+    backdrop-filter: blur(18px);
+    border-radius: 25px;
+    padding: 45px;
+    box-shadow: 0 35px 90px rgba(0,0,0,0.75);
+    animation: slideIn 0.5s ease;
+}
+
+/* =========================
+   CLOSE BUTTON
+========================= */
+.close-btn {
+    position: absolute;
+    top: 20px;
+    right: 30px;
+    font-size: 40px;
+    cursor: pointer;
+    transition: transform 0.3s ease, color 0.3s ease;
+}
+
+.close-btn:hover {
+    transform: rotate(90deg);
+    color: #ffd700;
+}
+
+/* =========================
+   PROFILE HEADER
+========================= */
+.profile-header {
+    display: flex;
+    gap: 30px;
+    margin-bottom: 40px;
+    flex-wrap: wrap;
+    align-items: center;
+}
+
+.profile-image {
+    width: 200px;
+    height: 200px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 5px solid #ffd700;
+    box-shadow: 0 15px 35px rgba(0,0,0,0.6);
+}
+
+.profile-info {
+    flex: 1;
+}
+
+.profile-info h2 {
+    font-size: 2.6em;
+    color: #ffd700;
+    margin-bottom: 10px;
+}
+
+.profile-info p {
+    font-size: 1.1em;
+    line-height: 1.7;
+    opacity: 0.95;
+}
+
+/* =========================
+   SONGS SECTION
+========================= */
+.songs-section {
+    margin-top: 40px;
+}
+
+.songs-section h3 {
+    text-align: center;
+    font-size: 2.2em;
+    color: #ffd700;
+    margin-bottom: 25px;
+}
+
+.songs-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 22px;
+}
+/* SONG CARD */
+.song-card {
+  display: flex;
+  align-items: center;       /* center vertically */
+  justify-content: space-between;
+  padding: 14px 18px;
+  margin-bottom: 12px;
+  background-color: rgba(255,255,255,0.08);
+  border: 1px solid rgba(255,255,255,0.12);
+  border-radius: 14px;
+  transition: transform 0.2s ease, background-color 0.2s ease;
+}
+
+/* SONG INFO (TITLE + YEAR) */
+.song-info {
+  display: flex;
+  flex-direction: column;   /* vertical */
+}
+
+.song-title {
+  font-size: 16px;
+  font-weight: 600;
+  color: #fff;
+}
+
+.song-year {
+  font-size: 14px;
+  color: rgba(255,255,255,0.7);
+  margin-top: 3px;
+}
+
+/* PLAY BUTTON */
+.play-btn {
+  border: none;
+  cursor: pointer;
+  background: transparent;
+  color: #fff;
+  font-size: 18px;
+  font-weight: 700;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.25);
+  transition: transform 0.2s ease, filter 0.2s ease;
+}
+
+.play-btn:hover {
+  transform: scale(1.05);
+  filter: brightness(1.05);
+}
+
+/* ACTIVE SONG */
+.song-card.active {
+  background: rgba(255,255,255,0.18);
+  border-color: rgba(255,255,255,0.3);
+}
+
+
+
+/* =========================
+   FOOTER
+========================= */
+.footer {
+    margin-top: 70px;
+    background: #5f8590;
+    backdrop-filter: blur(10px);
+    text-align: center;
+    padding: 25px 15px;
+    box-shadow: 0 -10px 30px rgba(0,0,0,0.45);
+}
+
+.footer p {
+    font-size: 0.95rem;
+    opacity: 0.85;
+}
+
+/* =========================
+   ANIMATIONS
+========================= */
+@keyframes fadeInDown {
+    from {
+        opacity: 0;
+        transform: translateY(-25px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes slideIn {
+    from {
+        opacity: 0;
+        transform: translateY(60px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* =========================
+   RESPONSIVE
+========================= */
+@media (max-width: 768px) {
+    header h1 {
+        font-size: 1.6em;
+    }
+
+    .navbar {
+        padding: 12px 10px;
+    }
+
+    .profile-header {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .profile-content {
+        margin: 20px;
+        padding: 30px 20px;
+    }
+
+    .songs-grid {
+        grid-template-columns: 1fr;
+    }
+}
